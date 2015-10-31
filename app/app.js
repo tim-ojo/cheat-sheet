@@ -45,7 +45,7 @@ app.on('window-all-closed', function() {
 * Cheat management functions
 *****************************/
 
-ipc.on('load-cheats-msg', function(event, arg) {
+ipc.on('load-cheats-msg', function(event) {
   var userDataFileContents = fs.readFileSync(userDataFilePath);
   userCheatList = JSON.parse(userDataFileContents);
 
