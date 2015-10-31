@@ -1,0 +1,1 @@
+{"cheats":[{"id":100,"title":"Undo last commit in git","notes":"This is only valid if the change hasn't been pushed to a remote directory","code":"git reset --soft HEAD~1\nedit\ngit add ..\ngit commit -C ORIG_HEAD","tags":["git"]}]}
