@@ -1,0 +1,275 @@
+/* --------------------------------------
+   Navbar
+   -------------------------------------- */
+.navbar {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}
+
+.navbar-brand
+{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+}
+
+#closeBtn, #minimizeBtn, #addBtn, #filterTagsBtn {
+  -webkit-app-region: no-drag;
+}
+
+.glyphicon-minus-sign,
+.glyphicon-remove-sign
+{
+  margin: 4px;
+  font-size: 18px;
+}
+
+.glyphicon-minus-sign
+{
+  margin-top: 9px;
+  color: #F5F5F5;
+}
+.glyphicon-minus-sign:hover
+{
+  color: orange;
+}
+.glyphicon-minus-sign:active
+{
+  color: darkorange;
+}
+
+.glyphicon-remove-sign
+{
+  margin-top: 9px;
+  color: #F5F5F5;
+}
+.glyphicon-remove-sign:hover
+{
+  color: red;
+}
+.glyphicon-remove-sign:active
+{
+  color: firebrick;
+}
+
+.glyphicon-tags,
+.glyphicon-plus
+{
+  color: #F5F5F5;
+  font-size: 16px;
+}
+
+#filterTagsBtn,
+#addBtn{
+  margin-top: 8px;
+  margin-right: 4px;
+  background-color: #8888;
+  border-color: #080808;
+}
+
+#filterTagsBtn:hover,
+#addBtn:hover{
+  background-color: #191919;
+}
+
+#filterTagsBtn:hover .glyphicon-tags,
+#addBtn:hover .glyphicon-plus{
+  color: #3399FF;
+}
+
+#filterTagsBtn:active,
+#addBtn:active{
+  background-color: #080808;
+}
+
+#filterTagsBtn:active .glyphicon-tags,
+#addBtn:active .glyphicon-plus{
+  color: #337ab7;
+}
+/* --------------------------------------
+   Body
+   -------------------------------------- */
+body
+{
+  /* slate gray */
+  background-color: #708090;
+  /*dim gray*/
+  background-color: #696969;
+  /* white smoke */
+  background-color: #F5F5F5;
+
+  height  : 100%;
+  overflow: auto;
+}
+
+html {
+    height  : 100%;
+    overflow: hidden;
+}
+
+/* --------------------------------------
+   Cheat
+   -------------------------------------- */
+ul.cheats {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  /* width: 340px; */
+}
+
+.cheats h5 {
+  margin-top: 0px;
+}
+
+pre {
+  -webkit-box-decoration-break: clone;
+}
+
+pre:empty {
+  display: none;
+}
+
+pre {
+  /*display: inline;*/
+  display: block;
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  /*background-color: #f9f2f4;*/
+  /*background-color: transparent;*/
+  border: none;
+  border-radius: 4px;
+}
+
+.cheatTags {
+  color: white;
+  background-color: #0096F6;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 90%;
+}
+
+.cheat-actions a:hover  {
+  text-shadow: 0 0 8px #00baff;
+}
+
+.glyphicon-trash:active, .glyphicon-pencil:active {
+  color: black;
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Non-responsive overrides
+ *
+ * Utilize the following CSS to disable the responsive-ness of the container,
+ * grid system, and navbar.
+ *--------------------------------------------------------------------------------------------/
+
+/* Reset the container */ /*
+.container {
+  width: 970px;
+  max-width: none !important;
+}
+
+/* Demonstrate the grids */ /*
+.col-xs-4 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #eee;
+  background-color: rgba(86,61,124,.15);
+  border: 1px solid #ddd;
+  border: 1px solid rgba(86,61,124,.2);
+}
+
+.container .navbar-header,
+.container .navbar-collapse {
+  margin-right: 0;
+  margin-left: 0;
+}
+
+/* Always float the navbar header */ /*
+.navbar-header {
+  float: left;
+}
+
+/* Undo the collapsing navbar */ /*
+.navbar-collapse {
+  display: block !important;
+  height: auto !important;
+  padding-bottom: 0;
+  overflow: visible !important;
+  visibility: visible !important;
+}
+
+.navbar-toggle {
+  display: none;
+}
+.navbar-collapse {
+  border-top: 0;
+}
+
+.navbar-brand {
+  margin-left: -15px;
+}
+
+/* Always apply the floated nav */ /*
+.navbar-nav {
+  float: left;
+  margin: 0;
+}
+.navbar-nav > li {
+  float: left;
+}
+.navbar-nav > li > a {
+  padding: 15px;
+}
+
+/* Redeclare since we override the float above */ /*
+.navbar-nav.navbar-right {
+  float: right;
+}
+
+/* Undo custom dropdowns */ /*
+.navbar .navbar-nav .open .dropdown-menu {
+  position: absolute;
+  float: left;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, .15);
+  border-width: 0 1px 1px;
+  border-radius: 0 0 4px 4px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+.navbar-default .navbar-nav .open .dropdown-menu > li > a {
+  color: #333;
+}
+.navbar .navbar-nav .open .dropdown-menu > li > a:hover,
+.navbar .navbar-nav .open .dropdown-menu > li > a:focus,
+.navbar .navbar-nav .open .dropdown-menu > .active > a,
+.navbar .navbar-nav .open .dropdown-menu > .active > a:hover,
+.navbar .navbar-nav .open .dropdown-menu > .active > a:focus {
+  color: #fff !important;
+  background-color: #428bca !important;
+}
+.navbar .navbar-nav .open .dropdown-menu > .disabled > a,
+.navbar .navbar-nav .open .dropdown-menu > .disabled > a:hover,
+.navbar .navbar-nav .open .dropdown-menu > .disabled > a:focus {
+  color: #999 !important;
+  background-color: transparent !important;
+}
+
+/* Undo form expansion */ /*
+.navbar-form {
+  float: left;
+  width: auto;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-right: 0;
+  margin-left: 0;
+  border: 0;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}*/
