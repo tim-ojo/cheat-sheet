@@ -156,3 +156,19 @@ pre {
 .glyphicon-trash:active, .glyphicon-pencil:active {
   color: black;
 }
+
+/* --------------------------------------
+   Tags
+   -------------------------------------- */
+ .glyphicon-ok {
+   margin-right: 4px;
+   color: silver;
+ }
+
+ #tagList li {
+   border-bottom: thin solid lightgrey;
+ }
+
+ #tagList li:last-child {
+   border-bottom-style: none;
+ }

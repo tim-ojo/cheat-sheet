@@ -44,12 +44,13 @@ var ipc = require('ipc');
   $editCheatForm.on('submit', saveEdits);
   $cheatsUl.delegate('a.cheat-action-edit', 'click', loadCheatToEditForm);
   $cheatsUl.delegate('a.cheat-action-delete', 'click', deleteCheat);
+  $tagListUl.delegate('a', 'click', filterCheatList);
 
   _render();
 
   function _render () {
     // render cheats
-    $cheatsUl.html(Mustache.render(cheatListTemplate, visibleCheats));
+    $cheatsUl.html(Mustache.render(cheatListTemplate, cheatList));
 
     // render tags
     var tagList = [];
@@ -63,7 +64,39 @@ var ipc = require('ipc');
       }
     });
 
-    $tagListUl.append(Mustache.render(tagListTemplate, {"tagList":tagList}));
+    $tagListUl.html(Mustache.render(tagListTemplate, {"tagList":tagList}));
+
+    _renderTagSelection();
+  }
+
+  function _renderFiltered(cheatsToRender)
+  {
+    $cheatsUl.html(Mustache.render(cheatListTemplate, cheatsToRender));
+  }
+
+  function _renderTagSelection()
+  {
+    $tagListUl.find('li').each(function(i, li){
+      var tagItem = $(li);
+      if (!tagItem.hasClass('selectedTag'))
+        tagItem.find('span').css('visibility', 'hidden');
+      else
+        tagItem.find('span').css('visibility', 'visible');
+    });
+  }
+
+  function loadCheatToEditForm(event) {
+    var $cheat = $(event.target).closest('li');
+
+    $("#inputId").val($cheat.find('.panel-body .cheatId').text().trim());
+    $("#inputTitle").val($cheat.find('.panel-body .cheatTitle').text());
+    $("#inputNotes").val($cheat.find('.panel-body .cheatNotes').text().trim());
+    $("#inputCode").val($cheat.find('.panel-body .cheatCode').text());
+
+    var tagString = $cheat.find('.panel-body .cheatTags').map(function () {
+          return $(this).text();
+      }).get().join();
+    $("#inputTags").val(tagString);
   }
 
   function saveEdits(event) {
@@ -121,20 +154,6 @@ var ipc = require('ipc');
     _render();
   }
 
-  function loadCheatToEditForm(event) {
-    var $cheat = $(event.target).closest('li');
-
-    $("#inputId").val($cheat.find('.panel-body .cheatId').text().trim());
-    $("#inputTitle").val($cheat.find('.panel-body .cheatTitle').text());
-    $("#inputNotes").val($cheat.find('.panel-body .cheatNotes').text().trim());
-    $("#inputCode").val($cheat.find('.panel-body .cheatCode').text());
-
-    var tagString = $cheat.find('.panel-body .cheatTags').map(function () {
-          return $(this).text();
-      }).get().join();
-    $("#inputTags").val(tagString);
-  }
-
   function deleteCheat(event) {
     var cont = confirm("Confirm deletion");
     if (cont === false)
@@ -150,6 +169,32 @@ var ipc = require('ipc');
     ipc.send('delete-cheat-msg', cheatId);
 
     _render();
+  }
+
+  function filterCheatList(event) {
+
+    $tagListUl.find('li').removeClass('selectedTag');
+    var $selectedTag = $(event.target).closest('li');
+    $selectedTag.addClass('selectedTag');
+    _renderTagSelection();
+
+    // If the text is not in the tag list then return true (meaning filter the tag)
+    var selectedTagText = $selectedTag.text();
+    if (selectedTagText === 'All')
+    {
+      _renderFiltered(cheatList);
+    }
+    else {
+      var cheatsToRender = cheatList.cheats.filter(function (cheat){
+                              if (cheat.tags) {
+                                return cheat.tags.indexOf(selectedTagText) !== -1;
+                              }
+                              else {
+                                return false;
+                              }
+                            });
+      _renderFiltered({"cheats": cheatsToRender});
+    }
   }
 
 })();

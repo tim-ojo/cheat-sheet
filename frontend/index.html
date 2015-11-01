@@ -29,10 +29,10 @@
         <div id="filterTagsDropdown" class="dropdown pull-left">
           <a id="filterTagsBtn" class="btn pull-left dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span></a>
           <ul id="tagList" class="dropdown-menu">
-            <li><a href="#">All</a></li>
             <script id="tags-template" type="text/template">
+              <li class="selectedTag"><a href="#"><span class="glyphicon glyphicon-ok"></span>All</a></li>
               {{#tagList}}
-                <li><a href="#">{{.}}</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-ok"></span>{{.}}</a></li>
               {{/tagList}}
             </script>
           </ul>
