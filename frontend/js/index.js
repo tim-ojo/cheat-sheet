@@ -63,7 +63,7 @@ var ipc = require('ipc');
       }
     });
 
-    $tagListUl.html(Mustache.render(tagListTemplate, {"tagList":tagList}));
+    $tagListUl.append(Mustache.render(tagListTemplate, {"tagList":tagList}));
   }
 
   function saveEdits(event) {
