@@ -157,6 +157,15 @@ pre {
   color: black;
 }
 
+.glyphicon-option-vertical {
+  color: silver;
+  margin: 0px;
+  padding: 0px;
+}
+.glyphicon-option-vertical:hover {
+  cursor: move;
+}
+
 /* --------------------------------------
    Tags
    -------------------------------------- */

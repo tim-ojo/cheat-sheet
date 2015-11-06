@@ -15,6 +15,7 @@
     </script>
     <script src="lib/bootstrap/js/bootstrap.js"></script>
     <script src="js/mustache.js"></script>
+    <script src="js/html.sortable.js"></script>
     <!--<script src="js/showdown.js"></script>-->
   </head>
 
@@ -122,12 +123,15 @@
         <div class="col-md-12">
           <br />
 
-          <ul id="cheatsUl">
+          <ul id="cheatsUl" class="sortable">
                 <script id="cheats-template" type="text/template">
                     {{#cheats}}
                     <li>
                       <div draggable="false" class="panel panel-default">
                         <div class="panel-body">
+                          <div class="sort-handle pull-right">
+                            <span class="glyphicon glyphicon-option-vertical"/>
+                          </div>
                           <p hidden class="cheatId">
                             {{id}}
                           </p>
