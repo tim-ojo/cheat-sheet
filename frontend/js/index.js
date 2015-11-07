@@ -4,7 +4,7 @@ var ipc = require('ipc');
 * Window manager module
 **************************/
 
-(function(){
+var windowMgr = (function(){
   $(document).on('click', '#closeBtn', function(){
     ipc.sendSync('close-window-msg');
   });
@@ -20,6 +20,18 @@ var ipc = require('ipc');
   $('#cheatsUl').delegate('a.cheat-action-edit', 'click', function(event){
     $('#editCheatModal').modal('show');
   });
+
+  function enableDnD()
+  {
+    $('.sortable').sortable({
+      forcePlaceholderSize: true,
+      handle: '.sort-handle'
+    });
+  }
+
+  return {
+    enableDnD : enableDnD
+  };
 
 })();
 
@@ -51,6 +63,7 @@ var ipc = require('ipc');
   function _render () {
     // render cheats
     $cheatsUl.html(Mustache.render(cheatListTemplate, cheatList));
+    windowMgr.enableDnD();
 
     // render tags
     var tagList = [];
@@ -72,6 +85,7 @@ var ipc = require('ipc');
   function _renderFiltered(cheatsToRender)
   {
     $cheatsUl.html(Mustache.render(cheatListTemplate, cheatsToRender));
+    windowMgr.enableDnD();
   }
 
   function _renderTagSelection()
