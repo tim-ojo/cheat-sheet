@@ -127,7 +127,7 @@ var windowMgr = (function(){
       if (newCheat.tags.length === 1 && newCheat.tags[0] === '') // no tags
         newCheat.tags = null;
 
-      cheatList.cheats.push(newCheat);
+      cheatList.cheats.unshift(newCheat);
       ipc.send('add-cheat-msg', newCheat);
     }
     else // We are editing an existing cheat

@@ -30,7 +30,6 @@ app.on('ready', function(){
   });
 
   ipc.on('close-window-msg', function(event, arg){
-    persistToDataStoreAsync();
     mainWindow.close();
   });
   ipc.on('minimize-window-msg', function(event, arg) {
@@ -59,8 +58,8 @@ ipc.on('load-cheats-msg', function(event) {
 });
 
 ipc.on('add-cheat-msg', function (event, newCheat) {
-  userCheatList.cheats.push(newCheat);
-  //persistToDataStoreAsync();
+  userCheatList.cheats.unshift(newCheat);
+  persistToDataStoreAsync();
 });
 
 ipc.on('edit-cheat-msg', function (event, modifiedCheat) {
@@ -75,7 +74,7 @@ ipc.on('edit-cheat-msg', function (event, modifiedCheat) {
     cheatSearchResult[0].code = modifiedCheat.code;
     cheatSearchResult[0].tags = modifiedCheat.tags;
 
-    //persistToDataStoreAsync();
+    persistToDataStoreAsync();
   }
 });
 
@@ -84,11 +83,12 @@ ipc.on('delete-cheat-msg', function (event, cheatId) {
                         return cheat.id != cheatId;
                        });
 
-  //persistToDataStoreAsync();
+  persistToDataStoreAsync();
 });
 
 ipc.on('reorder-cheatlist-msg', function (event, reorder) {
   userCheatList.cheats.move(reorder.from, reorder.to);
+  persistToDataStoreAsync();
 })
 
 function persistToDataStoreAsync() {
