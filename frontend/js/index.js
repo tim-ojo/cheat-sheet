@@ -1,5 +1,10 @@
 var ipc = require('ipc');
 
+// Add move function
+Array.prototype.move = function (from, to) {
+  this.splice(to, 0, this.splice(from, 1)[0]);
+};
+
 /*************************
 * Window manager module
 **************************/
@@ -21,18 +26,6 @@ var windowMgr = (function(){
     $('#editCheatModal').modal('show');
   });
 
-  function enableDnD()
-  {
-    $('.sortable').sortable({
-      forcePlaceholderSize: true,
-      handle: '.sort-handle'
-    });
-  }
-
-  return {
-    enableDnD : enableDnD
-  };
-
 })();
 
 /*************************
@@ -42,7 +35,6 @@ var windowMgr = (function(){
 (function(){
   // initialize
   var cheatList = ipc.sendSync('load-cheats-msg');
-  var visibleCheats = cheatList;
 
   //cache DOM
   var $editCheatForm = $('#editCheatForm');
@@ -63,7 +55,7 @@ var windowMgr = (function(){
   function _render () {
     // render cheats
     $cheatsUl.html(Mustache.render(cheatListTemplate, cheatList));
-    windowMgr.enableDnD();
+    _enableDragAndDrop();
 
     // render tags
     var tagList = [];
@@ -76,16 +68,21 @@ var windowMgr = (function(){
         });
       }
     });
-
     $tagListUl.html(Mustache.render(tagListTemplate, {"tagList":tagList}));
 
     _renderTagSelection();
   }
 
-  function _renderFiltered(cheatsToRender)
+  function _enableDragAndDrop()
   {
-    $cheatsUl.html(Mustache.render(cheatListTemplate, cheatsToRender));
-    windowMgr.enableDnD();
+    $('.sortable').sortable({
+      forcePlaceholderSize: true,
+      handle: '.sort-handle'
+    })
+    .bind('sortupdate', function(e, ui) {
+      cheatList.cheats.move(ui.oldElementIndex, ui.elementIndex);
+      ipc.send('reorder-cheatlist-msg', {from: ui.oldElementIndex, to: ui.elementIndex});
+    });
   }
 
   function _renderTagSelection()
@@ -192,23 +189,26 @@ var windowMgr = (function(){
     $selectedTag.addClass('selectedTag');
     _renderTagSelection();
 
-    // If the text is not in the tag list then return true (meaning filter the tag)
     var selectedTagText = $selectedTag.text();
     if (selectedTagText === 'All')
     {
-      _renderFiltered(cheatList);
+      $cheatsUl.find('li').each(function (index, listItem){
+        $(listItem).show();
+      });
     }
     else {
-      var cheatsToRender = cheatList.cheats.filter(function (cheat){
-                              if (cheat.tags) {
-                                return cheat.tags.indexOf(selectedTagText) !== -1;
-                              }
-                              else {
-                                return false;
-                              }
-                            });
-      _renderFiltered({"cheats": cheatsToRender});
+      $cheatsUl.find('li').each(function (index, listItem){
+        $tagSpans = $(listItem).find('span.cheatTags');
+        if (!$tagSpans.text().includes(selectedTagText))
+        {
+          $(listItem).hide();
+        }
+        else {
+          $(listItem).show();
+        }
+      });
     }
+
   }
 
 })();
