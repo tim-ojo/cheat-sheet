@@ -30,6 +30,21 @@ var windowMgr = (function(){
     $('#addBtn').click();
   });
 
+  var remote = require('remote');
+  var Menu = remote.require('menu');
+  var MenuItem = remote.require('menu-item');
+
+  var menu = new Menu();
+  menu.append(new MenuItem({ label: 'Cut', selector: 'cut:', accelerator: 'CmdOrCtrl+X' }));
+  menu.append(new MenuItem({ label: 'Copy', selector: 'copy:', accelerator: 'CmdOrCtrl+C' }));
+  menu.append(new MenuItem({ label: 'Paste', selector: 'paste:', accelerator: 'CmdOrCtrl+V' }));
+  menu.append(new MenuItem({ label: 'Select All', selector: 'selectAll:', accelerator: 'CmdOrCtrl+A' }));
+
+  window.addEventListener('contextmenu', function (e) {
+    e.preventDefault();
+    menu.popup(remote.getCurrentWindow());
+  }, false);
+
 })();
 
 /*************************
