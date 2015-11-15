@@ -1,5 +1,6 @@
 {
   "name": "cheat-sheet",
+  "productName": "Cheat Sheet",
   "version": "0.1.0",
   "description": "An Electron app for keeping the small coding notes you always forget",
   "main": "app/app.js",
