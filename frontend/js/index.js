@@ -26,6 +26,10 @@ var windowMgr = (function(){
     $('#editCheatModal').modal('show');
   });
 
+  ipc.on('new-cheat-window-msg', function(event){
+    $('#addBtn').click();
+  });
+
 })();
 
 /*************************

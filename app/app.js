@@ -2,6 +2,9 @@ var app = require('app');
 var fs = require('fs');
 var ipc = require('ipc');
 var BrowserWindow = require('browser-window');
+var Menu = require('menu');
+var MenuItem = require('menu-item');
+var shell = require('shell');
 
 var userCheatList = null;
 var userDataFilePath = __dirname + '/../data/userData.json';
@@ -89,7 +92,7 @@ ipc.on('delete-cheat-msg', function (event, cheatId) {
 ipc.on('reorder-cheatlist-msg', function (event, reorder) {
   userCheatList.cheats.move(reorder.from, reorder.to);
   persistToDataStoreAsync();
-})
+});
 
 function persistToDataStoreAsync() {
   fs.writeFile(userDataFilePath, JSON.stringify(userCheatList), function (err) {
@@ -99,3 +102,268 @@ function persistToDataStoreAsync() {
     }
   });
 }
+
+/**********************
+*  Application Menu
+***********************/
+app.once('ready', function() {
+  var template;
+  if (process.platform == 'darwin') {
+    template = [
+      {
+        label: 'Cheat Sheet',
+        submenu: [
+          {
+            label: 'About Cheat Sheet',
+            selector: 'orderFrontStandardAboutPanel:'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Services',
+            submenu: []
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Hide Cheat Sheet',
+            accelerator: 'Command+H',
+            selector: 'hide:'
+          },
+          {
+            label: 'Hide Others',
+            accelerator: 'Command+Shift+H',
+            selector: 'hideOtherApplications:'
+          },
+          {
+            label: 'Show All',
+            selector: 'unhideAllApplications:'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Quit',
+            accelerator: 'Command+Q',
+            click: function() { app.quit(); }
+          },
+        ]
+      },
+      {
+        label: 'File',
+        submenu: [
+          {
+            label: 'New Cheat',
+            accelerator: 'Command+N',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.webContents.send('new-cheat-window-msg');
+            }
+          },
+        ]
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          {
+            label: 'Undo',
+            accelerator: 'Command+Z',
+            selector: 'undo:'
+          },
+          {
+            label: 'Redo',
+            accelerator: 'Shift+Command+Z',
+            selector: 'redo:'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Cut',
+            accelerator: 'Command+X',
+            selector: 'cut:'
+          },
+          {
+            label: 'Copy',
+            accelerator: 'Command+C',
+            selector: 'copy:'
+          },
+          {
+            label: 'Paste',
+            accelerator: 'Command+V',
+            selector: 'paste:'
+          },
+          {
+            label: 'Select All',
+            accelerator: 'Command+A',
+            selector: 'selectAll:'
+          },
+        ]
+      },
+      {
+        label: 'View',
+        submenu: [
+          {
+            label: 'Reload',
+            accelerator: 'Command+R',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.reload();
+            }
+          },
+          {
+            label: 'Toggle Developer Tools',
+            accelerator: 'Alt+Command+I',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.toggleDevTools();
+            }
+          },
+        ]
+      },
+      {
+        label: 'Window',
+        submenu: [
+          {
+            label: 'Minimize',
+            accelerator: 'Command+M',
+            selector: 'performMiniaturize:'
+          },
+          {
+            label: 'Close',
+            accelerator: 'Command+W',
+            selector: 'performClose:'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Bring All to Front',
+            selector: 'arrangeInFront:'
+          },
+        ]
+      },
+      {
+        label: 'Help',
+        submenu: [
+          {
+            label: 'Learn More',
+            click: function() { shell.openExternal('https://github.com/tim-ojo/cheat-sheet'); }
+          },
+          {
+            label: 'Report an Issue',
+            click: function() { shell.openExternal('https://github.com/tim-ojo/cheat-sheet/issues'); }
+          }
+        ]
+      }
+    ];
+  } else {
+    template = [
+      {
+        label: '&File',
+        submenu: [
+          {
+            label: '&New Cheat',
+            accelerator: 'Ctrl+N',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.webContents.send('new-cheat-window-msg');
+            }
+          },
+          {
+            label: '&Close',
+            accelerator: 'Ctrl+W',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.close();
+            }
+          },
+        ]
+      },
+      {
+        label: '&Edit',
+        submenu: [
+          {
+            label: 'Undo',
+            accelerator: 'Ctrl+Z',
+            role: 'undo'
+          },
+          {
+            label: 'Redo',
+            accelerator: 'Ctrl+Y',
+            role: 'redo'
+          },
+          {
+            type: 'separator'
+          },
+          {
+            label: 'Cut',
+            accelerator: 'Command+X',
+            role: 'cut'
+          },
+          {
+            label: 'Copy',
+            accelerator: 'Command+C',
+            role: 'copy'
+          },
+          {
+            label: 'Paste',
+            accelerator: 'Command+V',
+            role: 'paste'
+          },
+          {
+            label: 'Select All',
+            accelerator: 'Command+A',
+            role: 'selectall'
+          },
+        ]
+      },
+      {
+        label: '&View',
+        submenu: [
+          {
+            label: '&Reload',
+            accelerator: 'Ctrl+R',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.reload();
+            }
+          },
+          {
+            label: 'Toggle &Developer Tools',
+            accelerator: 'Shift+Ctrl+I',
+            click: function() {
+              var focusedWindow = BrowserWindow.getFocusedWindow();
+              if (focusedWindow)
+                focusedWindow.toggleDevTools();
+            }
+          },
+        ]
+      },
+      {
+        label: 'Help',
+        submenu: [
+          {
+            label: 'Learn More',
+            click: function() { shell.openExternal('https://github.com/tim-ojo/cheat-sheet'); }
+          },
+          {
+            label: 'Report an Issue',
+            click: function() { shell.openExternal('https://github.com/tim-ojo/cheat-sheet/issues'); }
+          }
+        ]
+      }
+    ];
+  }
+
+  var menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+});
