@@ -18,7 +18,7 @@ Array.prototype.move = function (from, to) {
 *  Application Startup
 ***********************/
 app.on('ready', function(){
-  var iconPath = __dirname + '/../frontend/img/cs_logo1_256.png';
+  var iconPath = __dirname + '/../frontend/img/icon_32x32.png';
 
   var mainWindow = new BrowserWindow({
     width: 480,
