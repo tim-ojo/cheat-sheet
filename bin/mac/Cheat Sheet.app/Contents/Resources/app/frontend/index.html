@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cheat Sheet</title>
+
+    <!-- Mobile viewport optimized -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css" type="text/css">
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.css" type="text/css">
+    <link rel="stylesheet" href="css/index.css" type="text/css">
+
+    <script>
+      window.$ = window.jQuery = require('./js/jquery.js');
+    </script>
+    <script src="lib/bootstrap/js/bootstrap.js"></script>
+    <script src="js/mustache.js"></script>
+    <script src="js/html.sortable.js"></script>
+    <!--<script src="js/showdown.js"></script>-->
+  </head>
+
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container center-block">
+
+        <a id="closeBtn" class="pull-right"><span class="glyphicon glyphicon-remove-sign"></span></a>
+        <a id="minimizeBtn" class="pull-right"><span class="glyphicon glyphicon-minus-sign"></span></a>
+
+        <a id="addBtn" class="btn pull-left" data-toggle="modal" data-target="#editCheatModal"><span class="glyphicon glyphicon-plus"></span></a>
+        <div id="filterTagsDropdown" class="dropdown pull-left">
+          <a id="filterTagsBtn" class="btn pull-left dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-tags"></span></a>
+          <ul id="tagList" class="dropdown-menu">
+            <script id="tags-template" type="text/template">
+              <li class="selectedTag"><a href="#"><span class="glyphicon glyphicon-ok"></span>All</a></li>
+              {{#tagList}}
+                <li><a href="#"><span class="glyphicon glyphicon-ok"></span>{{.}}</a></li>
+              {{/tagList}}
+            </script>
+          </ul>
+        </div>
+
+        <script>
+          if (navigator.appVersion.indexOf("Mac")!=-1)
+          {
+            $('#closeBtn').removeClass('pull-right');
+            $('#closeBtn').addClass('pull-left');
+
+            $('#minimizeBtn').removeClass('pull-right');
+            $('#minimizeBtn').addClass('pull-left');
+
+            $('#addBtn').removeClass('pull-left');
+            $('#addBtn').addClass('pull-right');
+
+            $('#filterTagsBtn').removeClass('pull-left');
+            $('#filterTagsBtn').addClass('pull-right');
+
+            $('#filterTagsDropdown').removeClass('pull-left');
+            $('#filterTagsDropdown').addClass('pull-right');
+          }
+        </script>
+
+        <div>
+          <div class="text-center" style="margin-top: 5px">
+            <img src="img/cs_full.001.png" alt="Temporary CheatSheet logo" height="30px">
+          </div>
+        </div>
+
+      </div> <!-- end nav container -->
+    </div> <!-- end nav -->
+
+    <hr />
+
+    <div class="modal fade" id="editCheatModal">
+			<div class=modal-dialog>
+				<div class="modal-content">
+					<div class="modal-header">
+						<button class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Add Cheat</h4>
+					</div> <!-- end modal-header -->
+
+          <form class="form-horizontal" id="editCheatForm">
+  					<div class="modal-body">
+                <input type="hidden" id="inputId">
+  							<div class="form-group">
+  								<label class="col-md-2 control-label" for="inputTitle">Title</label>
+  								<div class="col-md-10">
+  									<input class="form-control" id="inputTitle" type="text">
+  								</div>
+  							</div>
+  							<div class="form-group">
+  								<label class="col-md-2 control-label" for="inputNotes">Notes</label>
+  								<div class="col-md-10">
+                    <textarea class="form-control" id="inputNotes" rows="3"></textarea>
+  								</div>
+  							</div>
+  							<div class="form-group">
+  								<label class="col-md-2 control-label" for="inputCode">Code</label>
+  								<div class="col-md-10">
+  									<textarea class="form-control" id="inputCode" rows="3"></textarea>
+  								</div>
+  							</div>
+                <div class="form-group">
+  								<label class="col-md-2 control-label" for="inputTags">Tags</label>
+  								<div class="col-md-10">
+  									<input class="form-control" id="inputTags" type="text">
+  								</div>
+  							</div>
+  					</div> <!-- end modal body -->
+
+  					<div class="modal-footer">
+  						<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+  						<button class="btn btn-primary" type="submit">Save Changes</button>
+  					</div><!-- end modal footer -->
+
+          </form>
+
+				</div> <!-- end modal content -->
+			</div> <!-- end modal dialog -->
+		</div> <!-- end editCheatModal -->
+
+    <div class="container">
+      <div class="row" id="cheatsView">
+        <div class="col-md-12">
+          <br />
+
+          <ul id="cheatsUl" class="sortable">
+                <script id="cheats-template" type="text/template">
+                    {{#cheats}}
+                    <li>
+                      <div draggable="false" class="panel panel-default">
+                        <div class="panel-body">
+                          <div class="sort-handle pull-right">
+                            <span class="glyphicon glyphicon-option-vertical"/>
+                          </div>
+                          <p hidden class="cheatId">
+                            {{id}}
+                          </p>
+                          <h5 class="cheatTitle">{{title}}</h5>
+                          <p class="cheatNotes">
+                            {{notes}}
+                          </p>
+                          <pre class="cheatCode">{{code}}</pre>
+
+                          <br/>
+
+                          <div class="pull-left">
+                            {{#tags}}
+                            <span class="cheatTags"><span class="glyphicon glyphicon-tag"></span>{{.}}</span>
+                            {{/tags}}
+                          </div>
+
+                          <div class="pull-right cheat-actions">
+                            <a class="cheat-action-delete"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="cheat-action-edit"><span class="glyphicon glyphicon-pencil"></span></a>
+                          </div> <!-- end cheat actions bar -->
+
+                        </div><!-- end panel body -->
+                      </div> <!-- end panel -->
+                    </li>
+                    {{/cheats}}
+                </script>
+          </ul>
+        </div> <!-- end col-md-12 -->
+      </div><!-- end cheatsView row -->
+    </div> <!-- end container -->
+
+    <script src="js/index.js"></script>
+
+  </body>
+</html>
