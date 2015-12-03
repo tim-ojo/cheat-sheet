@@ -177,14 +177,7 @@ var windowMgr = (function(){
       ipc.send('edit-cheat-msg', editedCheat);
     }
 
-    // Clear form and render
     event.preventDefault();
-
-    $("#inputTitle").val('');
-    $("#inputNotes").val('');
-    $("#inputCode").val('');
-    $("#inputTags").val('');
-
     _render();
   }
 
