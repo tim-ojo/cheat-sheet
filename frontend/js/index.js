@@ -30,6 +30,10 @@ var windowMgr = (function(){
     $('#addBtn').click();
   });
 
+  $('.modal').on('hidden.bs.modal', function(){
+    $(this).find('#editCheatForm')[0].reset();
+  });
+
   var remote = require('remote');
   var Menu = remote.require('menu');
   var MenuItem = remote.require('menu-item');
