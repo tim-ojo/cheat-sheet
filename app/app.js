@@ -305,22 +305,22 @@ app.once('ready', function() {
           },
           {
             label: 'Cut',
-            accelerator: 'Command+X',
+            accelerator: 'Ctrl+X',
             role: 'cut'
           },
           {
             label: 'Copy',
-            accelerator: 'Command+C',
+            accelerator: 'Ctrl+C',
             role: 'copy'
           },
           {
             label: 'Paste',
-            accelerator: 'Command+V',
+            accelerator: 'Ctrl+V',
             role: 'paste'
           },
           {
             label: 'Select All',
-            accelerator: 'Command+A',
+            accelerator: 'Ctrl+A',
             role: 'selectall'
           },
         ]
