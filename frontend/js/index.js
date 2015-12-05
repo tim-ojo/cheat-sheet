@@ -39,10 +39,30 @@ var windowMgr = (function(){
   var MenuItem = remote.require('menu-item');
 
   var menu = new Menu();
-  menu.append(new MenuItem({ label: 'Cut', selector: 'cut:', accelerator: 'CmdOrCtrl+X' }));
-  menu.append(new MenuItem({ label: 'Copy', selector: 'copy:', accelerator: 'CmdOrCtrl+C' }));
-  menu.append(new MenuItem({ label: 'Paste', selector: 'paste:', accelerator: 'CmdOrCtrl+V' }));
-  menu.append(new MenuItem({ label: 'Select All', selector: 'selectAll:', accelerator: 'CmdOrCtrl+A' }));
+  if (navigator.appVersion.indexOf("Mac")!=-1)
+  {
+    menu.append(new MenuItem({ label: 'Cut', selector: 'cut:', accelerator: 'CmdOrCtrl+X' }));
+    menu.append(new MenuItem({ label: 'Copy', selector: 'copy:', accelerator: 'CmdOrCtrl+C' }));
+    menu.append(new MenuItem({ label: 'Paste', selector: 'paste:', accelerator: 'CmdOrCtrl+V' }));
+    menu.append(new MenuItem({ label: 'Select All', selector: 'selectAll:', accelerator: 'CmdOrCtrl+A' }));
+  }
+  else {
+    menu.append(new MenuItem({ label: 'Cut', role: 'cut', accelerator: 'CmdOrCtrl+X' }));
+    menu.append(new MenuItem({ label: 'Copy', role: 'copy', accelerator: 'CmdOrCtrl+C' }));
+    menu.append(new MenuItem({ label: 'Paste', role: 'paste', accelerator: 'CmdOrCtrl+V' }));
+    menu.append(new MenuItem({ label: 'Select All', role: 'selectall', accelerator: 'CmdOrCtrl+A' }));
+  }
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: 'Reload',
+    accelerator: 'CmdOrCtrl+R',
+    click: function(){
+      //var focusedWindow = BrowserWindow.getFocusedWindow();
+      //if (focusedWindow)
+      //  focusedWindow.reload();
+      location.reload();
+    }
+  }))
 
   window.addEventListener('contextmenu', function (e) {
     e.preventDefault();
