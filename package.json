@@ -11,10 +11,12 @@
   "author": "Tim Ojo",
   "license": "MIT",
   "devDependencies": {
-    "electron-prebuilt": "^0.30.0"
+    "electron-prebuilt": "^0.30.0",
+    "gulp": "^3.9.0",
+    "gulp-electron": "0.0.9"
   },
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/tim-ojo/cheat-sheet.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tim-ojo/cheat-sheet.git"
   }
 }
