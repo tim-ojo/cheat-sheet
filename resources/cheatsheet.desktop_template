@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=Visual Studio Code
+Comment=Build and debug modern web and cloud applications
+Exec=/path/to/exec
+Icon=/path/to/cheatsheet128.png
+Terminal=false
+Type=Application
+Categories=Utility;Development;
