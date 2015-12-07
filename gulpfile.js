@@ -20,20 +20,20 @@ gulp.task('electron', function() {
         rebuild: false,
         packaging: true,
         asar: false,
-        platforms: ['linux-x64'],
+        platforms: ['linux-ia32', 'linux-x64', 'win32-ia32', 'darwin-x64'],
         platformResources: {
             darwin: {
                 CFBundleDisplayName: packageJson.name,
                 CFBundleIdentifier: packageJson.name,
                 CFBundleName: packageJson.name,
                 CFBundleVersion: packageJson.version,
-                icon: 'gulp-electron.icns'
+                icon: './resources/cheatsheet.icns'
             },
             win: {
                 "version-string": packageJson.version,
                 "file-version": packageJson.version,
                 "product-version": packageJson.version,
-                "icon": 'gulp-electron.ico'
+                "icon": './resources/cheatsheet.ico'
             }
         }
     }))
