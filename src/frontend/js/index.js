@@ -62,7 +62,7 @@ var windowMgr = (function(){
       //  focusedWindow.reload();
       location.reload();
     }
-  }))
+  }));
 
   window.addEventListener('contextmenu', function (e) {
     e.preventDefault();
@@ -167,8 +167,14 @@ var windowMgr = (function(){
         'tags' : $("#inputTags").val().split(sep)
       };
 
-      if (newCheat.tags.length === 1 && newCheat.tags[0] === '') // no tags
+      if (newCheat.tags.length === 1 && newCheat.tags[0] === '') {// no tags
         newCheat.tags = null;
+      }
+      else { // filter out empty tags
+          newCheat.tags = newCheat.tags.filter(function (tag) {
+            return tag !== '';
+          });
+      }
 
       cheatList.cheats.unshift(newCheat);
       ipc.send('add-cheat-msg', newCheat);
