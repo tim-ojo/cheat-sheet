@@ -94,6 +94,12 @@ ipc.on('reorder-cheatlist-msg', function (event, reorder) {
   persistToDataStoreAsync();
 });
 
+ipc.on('reload-window-msg', function(){
+  var focusedWindow = BrowserWindow.getFocusedWindow();
+  if (focusedWindow)
+    focusedWindow.reload();
+});
+
 function persistToDataStoreAsync() {
   fs.writeFile(userDataFilePath, JSON.stringify(userCheatList), function (err) {
     if (err)

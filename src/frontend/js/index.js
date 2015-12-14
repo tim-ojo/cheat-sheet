@@ -57,10 +57,7 @@ var windowMgr = (function(){
     label: 'Reload',
     accelerator: 'CmdOrCtrl+R',
     click: function(){
-      //var focusedWindow = BrowserWindow.getFocusedWindow();
-      //if (focusedWindow)
-      //  focusedWindow.reload();
-      location.reload();
+      ipc.send('reload-window-msg');
     }
   }));
 
