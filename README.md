@@ -6,11 +6,16 @@ There are certain concepts, algorithms or methods that you use infrequently enou
 
 Cheat Sheet is built on GitHub's Electron framework, so it runs on Windows, Linux and Mac OS X. 
 
-[General Screenshot]
+**Main Screen**
+![Main Screen](https://raw.githubusercontent.com/tim-ojo/cheat-sheet/master/docs/main_screen.png)
 
-[Adding / Editing a Cheat]
+**Adding or Editing a Cheat**
+![Add or Edit Screen](https://raw.githubusercontent.com/tim-ojo/cheat-sheet/master/docs/add_or_edit.png)
 
-[Tags and Filtering]
+**Filtering with tags**
+![Tags](https://raw.githubusercontent.com/tim-ojo/cheat-sheet/master/docs/tags.png)
+
+![Filtering](https://raw.githubusercontent.com/tim-ojo/cheat-sheet/master/docs/tags_filtered.png)
 
 ## Download and Install
 
